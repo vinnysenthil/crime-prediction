@@ -23,6 +23,14 @@ def _transform_coordinates(
   latitude,
   longitude
 ):
+  '''Transforms lat/long coordinates into cartesian coordinates
+  :param latitude:
+  :type: float
+  :param longitude:
+  :type: float
+
+  :rtype: (x, y, z)
+  '''
   latitude = radians(latitude)
   longitude = radians(longitude)
 
@@ -34,6 +42,12 @@ def _transform_coordinates(
 
 
 def _transform_time(time):
+  '''Transforms time into a cyclical feature i.e. sin_time, cos_time
+  :param time:
+  :type: datetime.time
+
+  :rtype: (sin_time, cos_time)
+  '''
   seconds_in_day = 24 * 60 * 60
   
   seconds = (time.hour * 60 + time.minute) * 60 + time.second
@@ -48,6 +62,16 @@ def _transform_input(
   latitude,
   longitude
 ):
+  '''Transforms input into what the model expects
+  :param dt:
+  :type: datetime.datetime
+  :param latitude:
+  :type: float
+  :param longitude
+  :type: float
+
+  :rtype: np.ndarray
+  '''
   sin_time, cos_time = _transform_time(dt.time())
   x, y, z = _transform_coordinates(latitude, longitude)
 
@@ -69,7 +93,7 @@ def predict(
   latitude,
   longitude
 ):
-  '''
+  '''Given the input, predicts whether there would be a violent crime or not
   :param dt:
   :type: datetime.datetime
   :param latitude:
