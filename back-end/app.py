@@ -1,7 +1,11 @@
 from flask import Flask, request
-import os, requests
+from model.model import predict
+import os, requests, datetime
+from dateutil import parser
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def hello():
@@ -21,11 +25,8 @@ def address_to_result():
     '''
     req = request.get_json()
 
-    if "address" not in req or "san francisco" not in req['address'].lower():
-        return "Please provide an address in SF!", 422
-    
-    if "time" and "year" not in req:
-        return "Must provide a time and year", 422
+    if "address" not in req or "dt" not in req:
+        return "Please provide an address and datetime in SF!", 422
 
     api_params = {
         'key': os.getenv('SFCRIME_API_KEY'),
@@ -43,8 +44,12 @@ def address_to_result():
     location = api_data['results'][0]['geometry']['location']
     lat, lng = location['lat'], location['lng']
     coordinates = "(" + str(lat) + ", " + str(lng)+")"
+    
+    print(req['address'])
+    print(coordinates)
+    print(parser.parse(req['dt']))
 
-    return coordinates, 200
+    return str(predict(parser.parse(req['dt']), lat, lng)), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3003, debug=True)
