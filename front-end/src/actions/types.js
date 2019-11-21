@@ -1,0 +1,2 @@
+export const GET_PREDICTION = "GET_PREDICTION";
+export const PREDICTING = "PREDICTING";
