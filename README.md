@@ -1,4 +1,10 @@
-# SF Crime Predictor
+# SF Crime Predictor 🔮
+**Figure out if a given time and place in SF is safe or not. The applied-ML model is based on [millions of incident reports](https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-Historical-2003/tmnf-yvry) across 15 years made public by the San Francisco Police Department.**
+
+## Requirements
+- Python 3
+- `npm`
+- Google Maps Geocoding API Key
 
 ## Getting Started
 1. Install dependencies in both services
